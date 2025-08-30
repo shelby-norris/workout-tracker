@@ -6,17 +6,21 @@ export default function Main() {
   const handleCreateRecord = (event) => {
     event.preventDefault(); // event handler for submit button
 
-    console.log(event.target.equip.value);
-    console.log(event.target.sets.value);
-    console.log(event.target.reps.value);
-    console.log(event.target.weight.value);
-  }
+    const newWorkoutLog = {
+      equip: event.target.equip.value,
+      sets: event.target.sets.value,
+      reps: event.target.reps.value,
+      weight: event.target.weight.value,
+    };
+
+    setWorkoutRecords((pastWorkoutLogs) => [...pastWorkoutLogs, newWorkoutLog]);
+  };
 
   return (
     <main>
       <section>
         {/* form layout for workout input; onSubmit is callback for event handler */}
-        <form onSubmit={(event) => handleCreateRecord(event)}> 
+        <form onSubmit={(event) => handleCreateRecord(event)}>
           <label htmlFor="equip">Equipment</label>
           <input type="text" name="equip" id="equipInput" />
           <br />
@@ -35,6 +39,29 @@ export default function Main() {
 
       <section>
         <h2>Previous Workouts</h2>
+
+        {workoutRecords.map((record, index) => {
+          return (
+            <div className="workout-logs" key={index}>
+              <div>
+                <h3>Equipment</h3>
+                <p>{record.equip}</p>
+              </div>
+              <div>
+                <h3>Sets</h3>
+                <p>{record.sets}</p>
+              </div>
+              <div>
+                <h3>Reps</h3>
+                <p>{record.reps}</p>
+              </div>
+              <div>
+                <h3>Weight</h3>
+                <p>{record.weight}</p>
+              </div>
+            </div>
+          );
+        })}
       </section>
     </main>
   );
